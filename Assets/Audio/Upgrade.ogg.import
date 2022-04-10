@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Upgrade.ogg-8edc9334039cb3f2e97a70124d312c0b.oggstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Upgrade.ogg"
+dest_files=[ "res://.import/Upgrade.ogg-8edc9334039cb3f2e97a70124d312c0b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

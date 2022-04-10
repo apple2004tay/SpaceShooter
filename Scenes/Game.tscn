@@ -1,0 +1,131 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Background/black.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/GameManager.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/MeteroBrownBig1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/MeteroManager.cs" type="Script" id=5]
+[ext_resource path="res://Scenes/MeteroGrayMed1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/MeteroGraySmall1.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/MeteroBrownMed1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/MeteroBrownSmall1.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/MeteroGrayBig1.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Fonts/Kenney Future.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://Scripts/EnemyManager.cs" type="Script" id=12]
+[ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/PowerUp.tscn" type="PackedScene" id=14]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Move"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 10 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 1280 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=4]
+size = 100
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 50
+font_data = ExtResource( 11 )
+
+[node name="GameManager" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Background"]
+texture = ExtResource( 2 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 720, 1280 )
+
+[node name="Sprite2" type="Sprite" parent="Background"]
+position = Vector2( 0, -1280 )
+texture = ExtResource( 2 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 720, 1280 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background"]
+autoplay = "Move"
+playback_speed = 2.0
+anims/Move = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
+[node name="MeteroManager" type="Node2D" parent="."]
+script = ExtResource( 5 )
+meteros = [ ExtResource( 4 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 7 ) ]
+
+[node name="EnemyManager" type="Node2D" parent="."]
+script = ExtResource( 12 )
+enemys = [ ExtResource( 13 ) ]
+powerUp = ExtResource( 14 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 360, 1100 )
+collision_mask = 58
+
+[node name="LaserHolder" type="Node2D" parent="."]
+
+[node name="Control" type="Control" parent="."]
+margin_right = 720.0
+margin_bottom = 1280.0
+
+[node name="StartCountdownLabel" type="Label" parent="Control"]
+margin_top = 500.0
+margin_right = 720.0
+margin_bottom = 650.0
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+
+[node name="AliveSecLabel" type="Label" parent="Control"]
+margin_left = 20.0
+margin_right = 720.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 3 )
+text = "Alive Sec: 0"
+valign = 1
+
+[node name="GameOverLabel" type="Label" parent="Control"]
+visible = false
+margin_right = 720.0
+margin_bottom = 1280.0
+custom_fonts/font = SubResource( 5 )
+text = "Game Over
+
+Press R Try Again
+Press Esc To Menu "
+align = 1
+valign = 1

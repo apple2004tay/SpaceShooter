@@ -1,0 +1,140 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Background/black.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Fonts/Kenney Future.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scripts/MainMenu.cs" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Move"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 10 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 1280 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=7]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 60
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Twinkle"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Backgrounds"]
+position = Vector2( 0, -1280 )
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 720, 1280 )
+
+[node name="Sprite2" type="Sprite" parent="Backgrounds"]
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 720, 1280 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Backgrounds"]
+autoplay = "Move"
+reset_on_save = false
+anims/Move = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 720.0
+margin_bottom = 1280.0
+
+[node name="HighestSecLabel" type="Label" parent="Control"]
+margin_left = 20.0
+margin_right = 720.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 7 )
+text = "Heighest Sec: 0"
+valign = 1
+
+[node name="SpaceShooterLabel" type="Label" parent="Control"]
+margin_top = 450.0
+margin_right = 720.0
+margin_bottom = 518.0
+custom_fonts/font = SubResource( 3 )
+text = "Space Shooter"
+align = 1
+
+[node name="PressAnyKeyLabel" type="Label" parent="Control"]
+margin_top = 700.0
+margin_right = 720.0
+margin_bottom = 735.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Press Any Key"
+align = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/PressAnyKeyLabel"]
+autoplay = "Twinkle"
+playback_speed = 1.5
+anims/RESET = SubResource( 5 )
+anims/Twinkle = SubResource( 6 )
