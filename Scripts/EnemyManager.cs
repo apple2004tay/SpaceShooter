@@ -12,10 +12,8 @@ public class EnemyManager : Node2D
     private float createEnemyTime = 2.0f;
 
     private Player player;
-    private Random random = new Random();
 
     private int enemyLevel;
-
 
     public override void _Ready()
     {
@@ -35,7 +33,7 @@ public class EnemyManager : Node2D
     private void CreateEnemy(int level)
     {
         var enemy = enemys[0].Instance<Enemy>();
-        enemy.Position = new Vector2(random.Next(50, 670), -100);
+        enemy.Position = new Vector2((int)GD.RandRange(50, 670), -100);
         enemy.Player = player;
         enemy.Level = level;
         enemy.OnDeadEvent += OnEnemyDead;
@@ -46,8 +44,7 @@ public class EnemyManager : Node2D
     {
         CreatePowerUp(posision);
 
-        var random = new Random();
-        await ToSignal(GetTree().CreateTimer(random.Next(1, 3)), "timeout");
+        await ToSignal(GetTree().CreateTimer((int)GD.RandRange(1, 3)), "timeout");
         enemyLevel++;
         CreateEnemy(enemyLevel);
     }

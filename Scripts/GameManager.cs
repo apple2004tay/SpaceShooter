@@ -77,7 +77,7 @@ public class GameManager : Node2D
         if (gameStart && !gameOver)
         {
             aliveSec += delta;
-            aliveSecLabel.Text = $"Alive Sec: {Math.Round(aliveSec, 2)}";
+            aliveSecLabel.Text = $"Alive Sec: {aliveSec.ToString("f2")}";
         }
 
         if (gameOver)

@@ -5,7 +5,6 @@ public class MeteroManager : Node2D
 {
     [Export]
     private PackedScene[] meteros;
-    private Random random = new Random();
     private Timer createMeteroTimer = new Timer();
     private float createMeteroTime = 1.5f;
     private Timer upgradeTimer = new Timer();
@@ -32,16 +31,16 @@ public class MeteroManager : Node2D
 
     private void CreateMetero()
     {
-        var metero = meteros[random.Next(0, meteros.Length)].Instance<Metero>();
-        metero.Position = new Vector2(random.Next(0, 720), -100);
-        metero.MoveDuration = random.Next(3, 10);
+        var metero = meteros[(int)GD.RandRange(0, meteros.Length)].Instance<Metero>();
+        metero.Position = new Vector2((int)GD.RandRange(0, 720), -100);
+        metero.MoveDuration = (int)GD.RandRange(3, 10);
         AddChild(metero);
     }
 
     private void OnUpgradeTimeout()
     {
         createMeteroTime -= 0.2f;
-        createMeteroTime = Math.Max(0.3f, createMeteroTime);
+        createMeteroTime = 0.3f > createMeteroTime ? 0.3f : createMeteroTime;
         StartCreateMetero();
 
         if (createMeteroTime <= 0.1f)

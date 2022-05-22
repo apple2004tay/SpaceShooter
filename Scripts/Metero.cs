@@ -16,8 +16,7 @@ public class Metero : Area2D
 
         explosionAudio = GetNode<AudioStreamPlayer>("ExplosionAudio");
         tween = GetNode<Tween>("Tween");
-        var rand = new Random();
-        var endPos = new Vector2(rand.Next(-100, 820), 1400);
+        var endPos = new Vector2((int)GD.RandRange(-100, 820), 1400);
         tween.InterpolateProperty(this, "position", Position, endPos, MoveDuration);
         tween.Connect("tween_completed", this, nameof(OnTweenCompleted));
         tween.Start();
